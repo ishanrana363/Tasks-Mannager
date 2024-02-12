@@ -32,29 +32,30 @@ exports.registration=async(req,res)=>{
 exports.login = async(req,res)=>{
     try {
         let reqBody = req.body;
-        let data = await userModel.findOne(reqBody);
+        let userData = await userModel.findOne(reqBody);
+        console.log(userData)
 
-        if(data){
-            // create jwt token
-            const payload = { 
-                exp: Math.floor(Date.now() / 1000) + (60 * 60*24),
-                email : data["email"],
-                id : data._id
-            }
-            let key = "lkfjdsfjkdsofdsjpfo"
-            let token = jwt.sign(payload,key);
-            res.status(201).json({
-                status:"success",
-                token : token,
-                photo : data.photo
-            })
-        }else{
-            res.status(404).json({
-                status:"fail",
-                msg:"data not found",
-                data : data
-            })
-        }
+        // if(userData){
+        //     // create jwt token
+        //     const payload = { 
+        //         exp: Math.floor(Date.now() / 1000) + (60 * 60*24),
+        //         email : data["email"],
+        //         id : data._id
+        //     }
+        //     let key = "lkfjdsfjkdsofdsjpfo"
+        //     let token = jwt.sign(payload,key);
+        //     res.status(201).json({
+        //         status:"success",
+        //         token : token,
+        //         photo : userData.photo,
+        //         data : userData
+        //     })
+        // }else{
+        //     res.status(404).json({
+        //         status:"fail",
+        //         msg:"data not found",
+        //     })
+        // }
     } catch (error) {
         console.log(error)
         res.status(500).json({
