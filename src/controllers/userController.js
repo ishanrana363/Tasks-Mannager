@@ -32,9 +32,9 @@ exports.registration=async(req,res)=>{
 exports.login = async(req,res)=>{
     try {
         let reqBody = req.body;
-        let userData = await userModel.findOne(reqBody);
+        let data = await userModel.findOne(reqBody);
 
-        if(userData){
+        if(data){
             // create jwt token
             const payload = { 
                 exp: Math.floor(Date.now() / 1000) + (60 * 60*24),
@@ -46,8 +46,8 @@ exports.login = async(req,res)=>{
             res.status(201).json({
                 status:"success",
                 token : token,
-                photo : userData.photo,
-                data : userData
+                photo : data.photo,
+                data : data
             })
         }else{
             res.status(404).json({
