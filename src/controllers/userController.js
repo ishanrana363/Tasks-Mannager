@@ -51,7 +51,8 @@ exports.login = async(req,res)=>{
         }else{
             res.status(404).json({
                 status:"fail",
-                msg:"data not found"
+                msg:"data not found",
+                data : data
             })
         }
     } catch (error) {
