@@ -33,29 +33,28 @@ exports.login = async(req,res)=>{
     try {
         let reqBody = req.body;
         let userData = await userModel.findOne(reqBody);
-        console.log(userData)
 
-        // if(userData){
-        //     // create jwt token
-        //     const payload = { 
-        //         exp: Math.floor(Date.now() / 1000) + (60 * 60*24),
-        //         email : data["email"],
-        //         id : data._id
-        //     }
-        //     let key = "lkfjdsfjkdsofdsjpfo"
-        //     let token = jwt.sign(payload,key);
-        //     res.status(201).json({
-        //         status:"success",
-        //         token : token,
-        //         photo : userData.photo,
-        //         data : userData
-        //     })
-        // }else{
-        //     res.status(404).json({
-        //         status:"fail",
-        //         msg:"data not found",
-        //     })
-        // }
+        if(userData){
+            // create jwt token
+            const payload = { 
+                exp: Math.floor(Date.now() / 1000) + (60 * 60*24),
+                email : data["email"],
+                id : data._id
+            }
+            let key = "lkfjdsfjkdsofdsjpfo"
+            let token = jwt.sign(payload,key);
+            res.status(201).json({
+                status:"success",
+                token : token,
+                photo : userData.photo,
+                data : userData
+            })
+        }else{
+            res.status(404).json({
+                status:"fail",
+                msg:"data not found",
+            })
+        }
     } catch (error) {
         console.log(error)
         res.status(500).json({
