@@ -37,7 +37,7 @@ app.use(hpp())
 
 // Using cors for enabling CORS
 
-app.use(cors())
+// app.use(cors())
 
 // Using MongoSanitize for sanitize user input
 

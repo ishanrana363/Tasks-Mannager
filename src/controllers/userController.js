@@ -1,4 +1,3 @@
-const { error, log } = require("console");
 const userModel = require("../models/userModel");
 const jwt = require("jsonwebtoken");
 const SendEmailUtility = require("../helper/emailHelper");
