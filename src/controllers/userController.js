@@ -84,10 +84,10 @@ exports.profileUpdate = async(req,res)=>{
             });
 
         }
-        let data = await userModel.findOneAndUpdate(filter,updateData,{new:true});
+        await userModel.findOneAndUpdate(filter,updateData);
         res.status(200).json({
             status:"success",
-            data : data
+            msg:"User Profile Update Successfully"
         });
     } catch (error) {
         console.log(error)
@@ -162,7 +162,6 @@ exports.emailOtpVerify = async(req, res) => {
                 data: updatedData
             });
         }
-
         res.status(404).json({
             status: "fail",
             msg: "Invalid OTP or email"
@@ -179,22 +178,21 @@ exports.emailOtpVerify = async(req, res) => {
 
 exports.userPasswordReset = async (req, res) => {
     try {
-        const { email, password, otp } = req.body;
+        const { email, password } = req.body;
 
         // Validate inputs
-        if (!email || !password || !otp) {
+        if (!email || !password) {
             return res.status(400).json({ status: "fail", msg: "Email, password, and OTP are required" });
         }
 
         // Check if OTP is valid and matches the email with the correct status
-        const otpData = await otpModel.findOne({ otp, email, status: 0 });
+        const otpData = await otpModel.findOne({email, status: 0 });
         if (!otpData) {
             return res.status(404).json({ status: "fail", msg: "Invalid OTP or email" });
         }
 
         // Update user password
         const userData = await userModel.updateOne({ email }, { $set: { password } });
-        await otpModel.updateOne({email},{ $set : {otp:0}  })
 
         res.status(200).json({ status: "success", msg: "Password reset successfully", data: userData });
     } catch (error) {

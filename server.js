@@ -8,6 +8,6 @@ const PORT = process.env.PORT||8080;
 
 
 app.listen(PORT, async ()=>{
-    console.log(`server run successfully `);
+    console.log(`server run successfully http://localhost:${PORT} `);
     await connectDB()
 })
